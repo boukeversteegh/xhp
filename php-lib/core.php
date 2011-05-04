@@ -551,15 +551,20 @@ abstract class :x:primitive extends :x:composable-element {
    *
    */
   final public function __toString() {
-
-    // Validate our children
-    $this->__flushElementChildren();
-    if (:x:base::$ENABLE_VALIDATION) {
-      $this->validateChildren();
+    try {
+      // Validate our children
+      $this->__flushElementChildren();
+      if (:x:base::$ENABLE_VALIDATION) {
+        $this->validateChildren();
+      }
+  
+      // Render to string
+      return $this->stringify();
+    catch( Exception $e ) {
+      print $e->getMessage();
+      print $e->getTraceAsString();
+      die();
     }
-
-    // Render to string
-    return $this->stringify();
   }
 }
 
